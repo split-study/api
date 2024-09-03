@@ -1,9 +1,10 @@
 import { GraphQLClient } from 'graphql-request';
+import config from '../config';
 
-const url = 'https://a1842c-78.myshopify.com/admin/api/2024-07/graphql.json';
+const url = `https://${config.SHOPIFY_STORE_DOMAIN}/admin/api/2024-07/graphql.json`;
 
 const headers = {
-  'X-Shopify-Access-Token': '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',
+  'X-Shopify-Access-Token': config.SHOPIFY_ACCESS_KEY,
 };
 
 export const client = new GraphQLClient(url, { headers });

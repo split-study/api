@@ -1,10 +1,22 @@
+import express from 'express';
+import cors from 'cors';
 import { http } from '@ampt/sdk';
-import express, { Router } from 'express';
+import { errorMiddleware } from './src/middlewares/errorMiddleware';
+import {
+  productRouter,
+  productVariantsRouter,
+  orderWebhookRouter,
+} from './src/routes';
 
 const app = express();
 
-app.get('/', (req, res) => {
-  return res.status(200).send({ message: 'Hello from the public api!' });
-});
+app.use(cors({ origin: '*' }));
+app.use(express.json());
+
+app.use('/products', productRouter);
+app.use('/product-variants', productVariantsRouter);
+app.use('/order-webhook', orderWebhookRouter);
+
+app.use(errorMiddleware);
 
 http.node.use(app);
